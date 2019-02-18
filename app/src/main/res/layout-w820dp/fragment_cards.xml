@@ -72,23 +72,22 @@
             android:layout_marginStart="@dimen/main_card_margin_horizontal_big_activity"
             android:layout_marginTop="@dimen/text_margin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/card_ad"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_main_1_4_1" />
 
-        <include
-            android:id="@+id/card_ad"
-            layout="@layout/ad_banner_main_card"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/text_margin_small"
-            android:layout_marginEnd="@dimen/main_card_margin_horizontal_big_activity"
-            android:layout_marginStart="@dimen/text_margin_small"
-            android:layout_marginTop="@dimen/text_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/card_main_1_3"
-            app:layout_constraintTop_toBottomOf="@+id/card_main_1_4_2" />
+        <!--<include-->
+            <!--android:id="@+id/card_ad"-->
+            <!--layout="@layout/ad_banner_main_card"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/text_margin_small"-->
+            <!--android:layout_marginEnd="@dimen/main_card_margin_horizontal_big_activity"-->
+            <!--android:layout_marginStart="@dimen/text_margin_small"-->
+            <!--android:layout_marginTop="@dimen/text_margin"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="@id/card_main_1_3"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/card_main_1_4_2" />-->
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

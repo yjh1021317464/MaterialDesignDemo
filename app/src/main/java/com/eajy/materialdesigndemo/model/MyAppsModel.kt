@@ -5,7 +5,7 @@ import java.io.Serializable
 data class MyAppsModel(
         val name: String,
         val description: String,
-        val imageUrl: String,
+        val imageUri: String,
         val packageName: String,
         val googlePlayUrl: String
 ) : Serializable {

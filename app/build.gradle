@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.eajy.materialdesigndemo"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 40
         versionName "4.8"
@@ -38,7 +38,6 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    implementation 'com.google.android.gms:play-services-ads:17.1.1'
 }
 repositories {
     mavenCentral()

@@ -17,14 +17,14 @@ import com.eajy.materialdesigndemo.view.ItemTouchHelperCallback
 
 class RecyclerViewActivity : AppCompatActivity() {
 
-    private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    private var mRecyclerView: RecyclerView? = null
-    private var fab: FloatingActionButton? = null
-    private var adapter: RecyclerViewAdapter? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
+    private lateinit var adapter: RecyclerViewAdapter
 
     private var color = 0
-    private var data: List<String>? = null
-    private var insertData: String? = null
+    private lateinit var data: List<String>
+    private lateinit var insertData: String
     private var loading: Boolean = false
     private var loadTimes: Int = 0
 
@@ -41,19 +41,19 @@ class RecyclerViewActivity : AppCompatActivity() {
 
                 Handler().postDelayed({
                     if (loadTimes <= 5) {
-                        adapter!!.removeFooter()
+                        adapter.removeFooter()
                         loading = false
-                        adapter!!.addItems(data!!)
-                        adapter!!.addFooter()
+                        adapter.addItems(data)
+                        adapter.addFooter()
                         loadTimes++
                     } else {
-                        adapter!!.removeFooter()
-                        Snackbar.make(mRecyclerView!!, getString(R.string.no_more_data), Snackbar.LENGTH_SHORT)
+                        adapter.removeFooter()
+                        Snackbar.make(mRecyclerView, getString(R.string.no_more_data), Snackbar.LENGTH_SHORT)
                                 .setCallback(object : Snackbar.Callback() {
                                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                         super.onDismissed(transientBottomBar, event)
                                         loading = false
-                                        adapter!!.addFooter()
+                                        adapter.addFooter()
                                     }
                                 }).show()
                     }
@@ -77,9 +77,8 @@ class RecyclerViewActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar_recycler_view)
         setSupportActionBar(toolbar)
-        if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         initData()
         findView()
@@ -103,7 +102,7 @@ class RecyclerViewActivity : AppCompatActivity() {
 
     private fun initView() {
 
-        mRecyclerView!!.layoutManager = when {
+        mRecyclerView.layoutManager = when {
             screenWidthDp >= 1200 -> {
                 GridLayoutManager(this, 3)
             }
@@ -116,14 +115,14 @@ class RecyclerViewActivity : AppCompatActivity() {
         }
 
         adapter = RecyclerViewAdapter(this)
-        mRecyclerView!!.adapter = adapter
-        adapter!!.addHeader()
-        adapter!!.setItems(data!!)
-        adapter!!.addFooter()
+        mRecyclerView.adapter = adapter
+        adapter.addHeader()
+        adapter.setItems(data)
+        adapter.addFooter()
 
-        fab!!.setOnClickListener {
-            val linearLayoutManager = mRecyclerView!!.layoutManager as LinearLayoutManager?
-            adapter!!.addItem(linearLayoutManager!!.findFirstVisibleItemPosition() + 1, insertData!!)
+        fab.setOnClickListener {
+            val linearLayoutManager = mRecyclerView.layoutManager as LinearLayoutManager
+            adapter.addItem(linearLayoutManager.findFirstVisibleItemPosition() + 1, insertData)
         }
 
         val callback = ItemTouchHelperCallback(adapter)
@@ -131,23 +130,23 @@ class RecyclerViewActivity : AppCompatActivity() {
         mItemTouchHelper.attachToRecyclerView(mRecyclerView)
 
 
-        swipeRefreshLayout!!.setColorSchemeResources(
+        swipeRefreshLayout.setColorSchemeResources(
                 R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
                 R.color.google_yellow
         )
-        swipeRefreshLayout!!.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             Handler().postDelayed({
                 if (color > 4) {
                     color = 0
                 }
-                adapter!!.setColor(++color)
-                swipeRefreshLayout!!.isRefreshing = false
+                adapter.setColor(++color)
+                swipeRefreshLayout.isRefreshing = false
             }, 2000)
         }
 
-        mRecyclerView!!.addOnScrollListener(scrollListener)
+        mRecyclerView.addOnScrollListener(scrollListener)
     }
 
 }

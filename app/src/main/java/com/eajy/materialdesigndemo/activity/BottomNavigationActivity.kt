@@ -14,14 +14,14 @@ import com.eajy.materialdesigndemo.R
 
 class BottomNavigationActivity : AppCompatActivity() {
 
-    private var viewPager: ViewPager? = null
-    private var navigation: BottomNavigationView? = null
-    private var viewList: List<View>? = null
+    private lateinit var viewPager: ViewPager
+    private lateinit var navigation: BottomNavigationView
+    private lateinit var viewList: List<View>
 
     private val pageChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             val evaluator = ArgbEvaluator()
-            var evaluate = when (position) {
+            val evaluate = when (position) {
                 0 -> evaluator.evaluate(positionOffset,
                         resources.getColor(R.color.app_blue),
                         resources.getColor(R.color.app_green)) as Int
@@ -33,15 +33,15 @@ class BottomNavigationActivity : AppCompatActivity() {
                         resources.getColor(R.color.app_red)) as Int
                 else -> resources.getColor(R.color.app_red)
             }
-            (viewPager!!.parent as View).setBackgroundColor(evaluate)
+            (viewPager.parent as View).setBackgroundColor(evaluate)
         }
 
         override fun onPageSelected(position: Int) {
             when (position) {
-                0 -> navigation!!.selectedItemId = R.id.bottom_navigation_blue
-                1 -> navigation!!.selectedItemId = R.id.bottom_navigation_green
-                2 -> navigation!!.selectedItemId = R.id.bottom_navigation_yellow
-                3 -> navigation!!.selectedItemId = R.id.bottom_navigation_red
+                0 -> navigation.selectedItemId = R.id.bottom_navigation_blue
+                1 -> navigation.selectedItemId = R.id.bottom_navigation_green
+                2 -> navigation.selectedItemId = R.id.bottom_navigation_yellow
+                3 -> navigation.selectedItemId = R.id.bottom_navigation_red
             }
         }
 
@@ -54,19 +54,19 @@ class BottomNavigationActivity : AppCompatActivity() {
             BottomNavigationView.OnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.bottom_navigation_blue -> {
-                        viewPager!!.currentItem = 0
+                        viewPager.currentItem = 0
                         true
                     }
                     R.id.bottom_navigation_green -> {
-                        viewPager!!.currentItem = 1
+                        viewPager.currentItem = 1
                         true
                     }
                     R.id.bottom_navigation_yellow -> {
-                        viewPager!!.currentItem = 2
+                        viewPager.currentItem = 2
                         true
                     }
                     R.id.bottom_navigation_red -> {
-                        viewPager!!.currentItem = 3
+                        viewPager.currentItem = 3
                         true
                     }
                     else -> false
@@ -75,18 +75,18 @@ class BottomNavigationActivity : AppCompatActivity() {
 
     private val pagerAdapter = object : PagerAdapter() {
 
-        override fun getCount() = viewList!!.size
+        override fun getCount() = viewList.size
 
         override fun isViewFromObject(view: View, `object`: Any) =
                 view === `object`
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            container.removeView(viewList!![position])
+            container.removeView(viewList[position])
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            container.addView(viewList!![position])
-            return viewList!![position]
+            container.addView(viewList[position])
+            return viewList[position]
         }
     }
 
@@ -113,11 +113,11 @@ class BottomNavigationActivity : AppCompatActivity() {
         )
 
         viewPager = findViewById(R.id.view_pager_bottom_navigation)
-        viewPager!!.adapter = pagerAdapter
-        viewPager!!.addOnPageChangeListener(pageChangeListener)
+        viewPager.adapter = pagerAdapter
+        viewPager.addOnPageChangeListener(pageChangeListener)
 
         navigation = findViewById(R.id.bottom_navigation)
-        navigation!!.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
 }

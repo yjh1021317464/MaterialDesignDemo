@@ -7,6 +7,7 @@ object Constant {
 
     const val APP_URL = "https://play.google.com/store/apps/details?id=com.eajy.materialdesigndemo"
     const val DESIGNED_BY = "Designed by Eajy in China"
+    const val MODIFIED_BY = "Modified by yjh1021317464 in China"
     const val SHARE_CONTENT = "A beautiful app designed with Material Design:\n$APP_URL\n- $DESIGNED_BY"
     const val EMAIL = "mailto:eajy.zhangxiao@gmail.com"
     const val GIT_HUB = "https://github.com/Eajy/MaterialDesignDemo"

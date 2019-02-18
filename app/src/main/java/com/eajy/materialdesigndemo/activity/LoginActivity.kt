@@ -20,15 +20,15 @@ import com.eajy.materialdesigndemo.R
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     // Keep track of the login task to ensure we can cancel it if requested.
-    private var mAuthTask: UserLoginTask? = null
+    private var mAuthTask: UserLoginTask?=null
 
-    private var mUserNameView: AutoCompleteTextView? = null
-    private var input_user_name: TextInputLayout? = null
-    private var input_password: TextInputLayout? = null
-    private var mPasswordView: EditText? = null
-    private var mProgressView: View? = null
-    private var mLoginFormView: View? = null
-    private var login_button: Button? = null
+    private lateinit var mUserNameView: AutoCompleteTextView
+    private lateinit var input_user_name: TextInputLayout
+    private lateinit var input_password: TextInputLayout
+    private lateinit var mPasswordView: EditText
+    private lateinit var mProgressView: View
+    private lateinit var mLoginFormView: View
+    private lateinit var login_button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initView() {
 
-        mPasswordView!!.setOnEditorActionListener { v, id, event ->
+        mPasswordView.setOnEditorActionListener { v, id, event ->
             if (id == R.id.btn_login || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 true
@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        login_button!!.setOnClickListener(this)
+        login_button.setOnClickListener(this)
         val forgot_password = findViewById<Button>(R.id.btn_forgot_password)
         forgot_password.setOnClickListener(this)
         val register = findViewById<Button>(R.id.btn_forgot_register)
@@ -94,29 +94,29 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         // Reset errors.
-        input_user_name!!.error = null
-        input_password!!.error = null
+        input_user_name.error = null
+        input_password.error = null
 
-        val userName = mUserNameView!!.text.toString()
-        val password = mPasswordView!!.text.toString()
+        val userName = mUserNameView.text.toString()
+        val password = mPasswordView.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         if (TextUtils.isEmpty(userName)) {
-            input_user_name!!.error = getString(R.string.error_no_name)
+            input_user_name.error = getString(R.string.error_no_name)
             focusView = mUserNameView
             cancel = true
         } else if (!isPhoneValid(userName) && !isEmailValid(userName)) {
-            input_user_name!!.error = getString(R.string.error_invalid_name)
+            input_user_name.error = getString(R.string.error_invalid_name)
             focusView = mUserNameView
             cancel = true
         } else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            input_password!!.error = getString(R.string.error_invalid_password)
+            input_password.error = getString(R.string.error_invalid_password)
             focusView = mPasswordView
             cancel = true
         } else if ((isPhoneValid(userName) || isEmailValid(userName)) && TextUtils.isEmpty(password)) {
-            input_password!!.error = getString(R.string.error_no_password)
+            input_password.error = getString(R.string.error_no_password)
             focusView = mPasswordView
             cancel = true
         }
@@ -146,23 +146,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun showProgress(show: Boolean) {
         val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
 
-        mLoginFormView!!.visibility = if (show) View.GONE else View.VISIBLE
-        mLoginFormView!!.animate()
+        mLoginFormView.visibility = if (show) View.GONE else View.VISIBLE
+        mLoginFormView.animate()
                 .setDuration(shortAnimTime.toLong())
                 .alpha(if (show) 0f else 1f)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        mLoginFormView!!.visibility = if (show) View.GONE else View.VISIBLE
+                        mLoginFormView.visibility = if (show) View.GONE else View.VISIBLE
                     }
                 })
 
-        mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-        mProgressView!!.animate()
+        mProgressView.visibility = if (show) View.VISIBLE else View.GONE
+        mProgressView.animate()
                 .setDuration(shortAnimTime.toLong())
                 .alpha(if (show) 1f else 0f)
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
+                        mProgressView.visibility = if (show) View.VISIBLE else View.GONE
                     }
                 })
     }
@@ -203,8 +203,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             if (success!!) {
                 finish()
             } else {
-                input_password!!.error = getString(R.string.error_incorrect_password)
-                mPasswordView!!.requestFocus()
+                input_password.error = getString(R.string.error_incorrect_password)
+                mPasswordView.requestFocus()
             }
         }
 

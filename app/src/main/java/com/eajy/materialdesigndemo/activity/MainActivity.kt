@@ -40,18 +40,18 @@ class MainActivity : AppCompatActivity(),
         private const val MESSAGE_SHOW_START_PAGE = 0x002
     }
 
-    private var drawer: DrawerLayout? = null
-    private var fab: FloatingActionButton? = null
-    private var mTabLayout: TabLayout? = null
-    private var mViewPager: ViewPager? = null
-    private var relative_main: RelativeLayout? = null
-    private var img_page_start: ImageView? = null
+    private lateinit var drawer: DrawerLayout
+    private lateinit var fab: FloatingActionButton
+    private lateinit var mTabLayout: TabLayout
+    private lateinit var mViewPager: ViewPager
+    private lateinit var relative_main: RelativeLayout
+    private lateinit var img_page_start: ImageView
 
     private val mHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MESSAGE_SHOW_DRAWER_LAYOUT -> {
-                    drawer!!.openDrawer(GravityCompat.START)
+                    drawer.openDrawer(GravityCompat.START)
                     val sharedPreferences = getSharedPreferences("app", Context.MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putBoolean("isFirst", false)
@@ -66,14 +66,14 @@ class MainActivity : AppCompatActivity(),
                         }
 
                         override fun onAnimationEnd(animation: Animation) {
-                            relative_main!!.visibility = View.GONE
+                            relative_main.visibility = View.GONE
                         }
 
                         override fun onAnimationRepeat(animation: Animation) {
 
                         }
                     })
-                    relative_main!!.startAnimation(alphaAnimation)
+                    relative_main.startAnimation(alphaAnimation)
                 }
             }
         }
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(),
     private fun findView() {
         relative_main = findViewById(R.id.relative_main)
         img_page_start = findViewById(R.id.img_page_start)
-        drawer = findViewById(R.id.drawer_layout)
+        drawer = findViewById(R.id.drawer)
         fab = findViewById(R.id.fab_main)
         mTabLayout = findViewById(R.id.tab_layout_main)
         mViewPager = findViewById(R.id.view_pager_main)
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(),
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer!!.addDrawerListener(toggle)
+        drawer.addDrawerListener(toggle)
         toggle.syncState()
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(),
         val nav_header = headerView.findViewById<LinearLayout>(R.id.nav_header)
         nav_header.setOnClickListener(this)
 
-        fab!!.setOnClickListener(this)
+        fab.setOnClickListener(this)
 
     }
 
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(),
                 getString(R.string.tab_title_main_3)
         )
         titles.forEach {
-            mTabLayout!!.addTab(mTabLayout!!.newTab().setText(it))
+            mTabLayout.addTab(mTabLayout.newTab().setText(it))
         }
 
         val fragments = arrayListOf(
@@ -140,12 +140,12 @@ class MainActivity : AppCompatActivity(),
         val mFragmentAdapter =
                 FragmentAdapter(supportFragmentManager, fragments, titles)
 
-        mTabLayout!!.setupWithViewPager(mViewPager)
-        mTabLayout!!.setTabsFromPagerAdapter(mFragmentAdapter)
-        mViewPager!!.offscreenPageLimit = 2
+        mTabLayout.setupWithViewPager(mViewPager)
+        mTabLayout.setTabsFromPagerAdapter(mFragmentAdapter)
+        mViewPager.offscreenPageLimit = 2
 
-        mViewPager!!.adapter = mFragmentAdapter
-        mViewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        mViewPager.adapter = mFragmentAdapter
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
@@ -173,10 +173,10 @@ class MainActivity : AppCompatActivity(),
         val sharedPreferences = getSharedPreferences("app", Context.MODE_PRIVATE)
 
         if (isShowPageStart) {
-            relative_main!!.visibility = View.VISIBLE
+            relative_main.visibility = View.VISIBLE
             Glide.with(this@MainActivity)
                     .load(R.drawable.ic_launcher_big)
-                    .into(img_page_start!!)
+                    .into(img_page_start)
             mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_START_PAGE,
                     if (sharedPreferences.getBoolean("isFirst", true)) 2000 else 1000)
             isShowPageStart = false
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity(),
             R.id.nav_header -> {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
-                drawer!!.closeDrawer(GravityCompat.START)
+                drawer.closeDrawer(GravityCompat.START)
             }
 
             R.id.fab_main -> {
@@ -271,13 +271,13 @@ class MainActivity : AppCompatActivity(),
             }
         }
 
-        drawer!!.closeDrawer(GravityCompat.START)
+        drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun onBackPressed() {
-        if (drawer!!.isDrawerOpen(GravityCompat.START)) {
-            drawer!!.closeDrawer(GravityCompat.START)
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }

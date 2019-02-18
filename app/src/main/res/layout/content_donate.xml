@@ -94,7 +94,5 @@
                 android:text="@string/donate" />
         </RelativeLayout>
 
-        <!--<include layout="@layout/ad_banner_donate" />-->
-
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

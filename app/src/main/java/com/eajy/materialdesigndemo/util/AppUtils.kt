@@ -12,7 +12,8 @@ object AppUtils {
 
     fun checkAppInstalled(context: Context, packageName: String): Boolean {
         try {
-            context.packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+            context.packageManager
+                    .getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
             return false
@@ -27,7 +28,7 @@ object AppUtils {
             val info = manager.getPackageInfo(context.packageName, 0)
             val version = info.versionName
             versionName = context.getString(R.string.about_version) + " " + version
-        } catch (e: Exception) {
+        } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
         return versionName

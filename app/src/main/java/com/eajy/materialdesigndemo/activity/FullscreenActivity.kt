@@ -17,9 +17,10 @@ import com.eajy.materialdesigndemo.R
 
 class FullscreenActivity : AppCompatActivity() {
 
-    private var video_fullscreen: VideoView? = null
-    private var relative_fullscreen: RelativeLayout? = null
-    private var progress_fullscreen: ProgressBar? = null
+    private lateinit var video_fullscreen: VideoView
+    private lateinit var relative_fullscreen: RelativeLayout
+    private lateinit var progress_fullscreen: ProgressBar
+
     private var isShowBar: Boolean = false
 
     private val MESSAGE_HIDE_BARS = 0x001
@@ -32,8 +33,8 @@ class FullscreenActivity : AppCompatActivity() {
                 MESSAGE_VIDEO_PREPARED -> {
                     val animation = AlphaAnimation(1.0f, 0.0f)
                     animation.duration = 500
-                    relative_fullscreen!!.startAnimation(animation)
-                    relative_fullscreen!!.visibility = View.GONE
+                    relative_fullscreen.startAnimation(animation)
+                    relative_fullscreen.visibility = View.GONE
                 }
             }
         }
@@ -63,7 +64,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun playVideo() {
         val uri = Uri.parse("android.resource://" + packageName + "/" + R.raw.full_screen_google)
-        video_fullscreen!!.apply {
+        video_fullscreen.apply {
             setVideoURI(uri)
             start()
             setOnPreparedListener {
@@ -73,7 +74,7 @@ class FullscreenActivity : AppCompatActivity() {
                 start()
             }
             setOnErrorListener { mp, what, extra ->
-                progress_fullscreen!!.visibility = View.VISIBLE
+                progress_fullscreen.visibility = View.VISIBLE
                 true
             }
             setOnTouchListener { v, event ->
@@ -96,14 +97,14 @@ class FullscreenActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        relative_fullscreen!!.visibility = View.VISIBLE
+        relative_fullscreen.visibility = View.VISIBLE
     }
 
     private fun showBars() {
         isShowBar = true
-        video_fullscreen!!.systemUiVisibility = View.VISIBLE
+        video_fullscreen.systemUiVisibility = View.VISIBLE
 
-        window!!.apply {
+        window.apply {
             clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
             )
@@ -125,7 +126,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun hideBars() {
         isShowBar = false
-        video_fullscreen!!.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
+        video_fullscreen.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE or
                 View.SYSTEM_UI_FLAG_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or

@@ -2,12 +2,11 @@ package com.eajy.materialdesigndemo.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
+import android.widget.Button
 import com.eajy.materialdesigndemo.R
-//import com.eajy.materialdesigndemo.billing.IabBroadcastReceiver
 
-class DonateActivity : AppCompatActivity()/*, IabBroadcastReceiver.IabBroadcastListener*/ {
+class DonateActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,13 +16,24 @@ class DonateActivity : AppCompatActivity()/*, IabBroadcastReceiver.IabBroadcastL
     }
 
     private fun initView() {
-        val toolbar = findViewById<View>(R.id.toolbar_donate) as Toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar_donate))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        findViewById<Button>(R.id.btn_donate_low)
+                .setOnClickListener(this)
+        findViewById<Button>(R.id.btn_donate_high)
+                .setOnClickListener(this)
     }
 
-//    override fun receivedBroadcast() {
-//
-//    }
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.btn_donate_low -> {
+                //todo
+            }
+            R.id.btn_donate_high -> {
+                //todo
+            }
+        }
+    }
 }
 

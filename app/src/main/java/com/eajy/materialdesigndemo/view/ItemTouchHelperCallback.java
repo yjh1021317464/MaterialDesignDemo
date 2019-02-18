@@ -4,7 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.eajy.materialdesigndemo.interf.onMoveAndSwipedListener;
+import com.eajy.materialdesigndemo.interf.MoveAndSwipedListener;
 
 /**
  * Created by zhang on 2016.08.21.
@@ -13,9 +13,9 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private final int TYPE_NORMAL = 1;
 
-    private onMoveAndSwipedListener moveAndSwipedListener;
+    private MoveAndSwipedListener moveAndSwipedListener;
 
-    public ItemTouchHelperCallback(onMoveAndSwipedListener listener) {
+    public ItemTouchHelperCallback(MoveAndSwipedListener listener) {
         this.moveAndSwipedListener = listener;
     }
 

@@ -17,16 +17,20 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.eajy.materialdesigndemo.R
 import com.eajy.materialdesigndemo.activity.ShareViewActivity
-import com.eajy.materialdesigndemo.interf.onMoveAndSwipedListener
+import com.eajy.materialdesigndemo.interf.MoveAndSwipedListener
 import java.util.*
 
 /**
  * Created by zhang on 2016.08.07.
  */
-class RecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), onMoveAndSwipedListener {
+
+// todo refactor
+class RecyclerViewAdapter(private val context: Context)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), MoveAndSwipedListener {
+
     private val mItems: MutableList<String>
     private var color = 0
-    private var parentView: View? = null
+    private lateinit var parentView: View
 
     private val TYPE_NORMAL = 1
     private val TYPE_FOOTER = 2
@@ -89,11 +93,14 @@ class RecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<R
                         .inflate(R.layout.item_recycler_footer, parent, false)
                 FooterViewHolder(view)
             }
-            else -> {
+            TYPE_HEADER -> {
                 val view = LayoutInflater
                         .from(parent.context)
                         .inflate(R.layout.item_recycler_header, parent, false)
                 HeaderViewHolder(view)
+            }
+            else -> {
+                throw Exception()
             }
         }
     }
@@ -112,37 +119,41 @@ class RecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<R
             val aa = AlphaAnimation(0.1f, 1.0f)
             aa.duration = 400
 
-            holder.rela_round.backgroundTintList = when (color) {
-                1 -> ColorStateList.valueOf(context.resources.getColor(R.color.google_blue))
-                2 -> ColorStateList.valueOf(context.resources.getColor(R.color.google_green))
-                3 -> ColorStateList.valueOf(context.resources.getColor(R.color.google_yellow))
-                4 -> ColorStateList.valueOf(context.resources.getColor(R.color.google_red))
-                else -> ColorStateList.valueOf(context.resources.getColor(R.color.gray))
-            }
+            holder.rela_round.backgroundTintList =
+                    ColorStateList.valueOf(context.resources.getColor(
+                            when (color) {
+                                1 -> R.color.google_blue
+                                2 -> R.color.google_green
+                                3 -> R.color.google_yellow
+                                4 -> R.color.google_red
+                                else -> R.color.gray
+                            }
+
+                    ))
 
             holder.rela_round.startAnimation(aa)
 
             holder.mView.setOnClickListener {
                 val intent = Intent(context, ShareViewActivity::class.java)
                 intent.putExtra("color", color)
-                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, holder.rela_round, "shareView").toBundle())
+                context.startActivity(intent,
+                        ActivityOptions.makeSceneTransitionAnimation(
+                                context as Activity,
+                                holder.rela_round,
+                                "shareView"
+                        ).toBundle()
+                )
             }
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        val s = mItems[position]
-        return when (s) {
-            HEADER -> TYPE_HEADER
-            FOOTER -> TYPE_FOOTER
-            else -> TYPE_NORMAL
-        }
+    override fun getItemViewType(position: Int) = when (mItems[position]) {
+        HEADER -> TYPE_HEADER
+        FOOTER -> TYPE_FOOTER
+        else -> TYPE_NORMAL
     }
 
-    override fun getItemCount(): Int {
-        return mItems.size
-    }
-
+    override fun getItemCount() = mItems.size
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         Collections.swap(mItems, fromPosition, toPosition)
@@ -154,7 +165,7 @@ class RecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<R
         mItems.removeAt(position)
         notifyItemRemoved(position)
 
-        Snackbar.make(parentView!!, context.getString(R.string.item_swipe_dismissed), Snackbar.LENGTH_SHORT)
+        Snackbar.make(parentView, context.getString(R.string.item_swipe_dismissed), Snackbar.LENGTH_SHORT)
                 .setAction(context.getString(R.string.item_swipe_undo)) { addItem(position, mItems[position]) }.show()
     }
 
