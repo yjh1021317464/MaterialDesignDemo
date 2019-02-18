@@ -292,7 +292,7 @@
             android:textColor="@color/colorPrimary"
             android:visibility="gone" />
 
-        <include layout="@layout/ad_banner_main_widget" />
+        <!--<include layout="@layout/ad_banner_main_widget" />-->
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
